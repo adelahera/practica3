@@ -47,6 +47,12 @@ void AIPlayer::think(color & c_piece, int & id_piece, int & dice) const{
         case 3:
             thinkMejorOpcion(c_piece, id_piece, dice);
             break;
+        case 4:
+            double value;
+            double alpha = menosinf, beta = masinf;
+
+            value = Poda_AlfaBeta(*actual, jugador, 0, PROFUNDIDAD_ALFABETA, c_piece, id_piece, dice, alpha, beta, ValoracionTest);
+            cout << "Valor minimax: " << value << " Accion: " << str(c_piece) << " " << id_piece << " " << dice << endl;
     }
     // cout << "Valor MiniMax: " << valor << "  Accion: " << str(c_piece) << " " << id_piece << " " << dice << endl;
 
@@ -177,6 +183,62 @@ void AIPlayer::thinkMejorOpcion(color & c_piece, int & id_piece, int & dice) con
     }
 }
 
+double AIPlayer::Poda_AlfaBeta(const Parchis &actual, int jugador, int profundidad, int profundidad_max, color &c_piece, int &id_piece, int &dice, double alpha, double beta, double (*heuristic)(const Parchis &, int)) const {
+
+    color last_c_piece = none;
+    int last_id_piece = -1;
+    int last_dice = -1;   
+
+    double value;
+
+    if(actual.gameOver() || profundidad == profundidad_max){
+
+        //devolver el valor de la heuristica del nodo
+        return heuristic(actual, jugador);
+    }
+
+    Parchis hijo = actual.generateNextMoveDescending(last_c_piece, last_id_piece, last_dice);
+
+    if(actual.getCurrentPlayerId() == jugador){        //Nodo MAX
+        //para cada hijo del nodo
+        while(!(hijo == actual) && beta > alpha){
+            value = max(alpha,Poda_AlfaBeta(hijo, jugador, profundidad+1, profundidad_max, c_piece, id_piece, dice, alpha, beta, heuristic));
+
+            if(value > alpha and profundidad == 0){
+                c_piece = last_c_piece;
+                id_piece = last_id_piece;
+                dice = last_dice;
+            }
+
+            alpha = max(alpha, value);
+                   
+            hijo = actual.generateNextMoveDescending(last_c_piece, last_id_piece, last_dice);
+            
+        }
+
+        return alpha;
+    }
+    else{                                   //Nodo MIN
+        //para cada hijo del nodo
+        while(!(hijo == actual) && beta > alpha){
+            value = min(beta,Poda_AlfaBeta(hijo, jugador, profundidad+1, profundidad_max, c_piece, id_piece, dice, alpha, beta, heuristic));
+
+            if(value < beta and profundidad == 0){
+
+                c_piece = last_c_piece;
+                id_piece = last_id_piece;
+                dice = last_dice;
+            }
+
+            beta = min(beta, value);
+            
+            hijo = actual.generateNextMoveDescending(last_c_piece, last_id_piece, last_dice);
+            
+        }
+
+        return beta;
+    }
+}
 
 double AIPlayer::ValoracionTest(const Parchis &estado, int jugador)
 {
