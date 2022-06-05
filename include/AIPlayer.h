@@ -75,6 +75,8 @@ class AIPlayer: public Player{
          */
         static double ValoracionTest(const Parchis &estado, int jugador);
 
+        static double miHeuristica(const Parchis &estado, int jugador);
+
         /**
          * @brief Propuesta de declaración de la función poda alfa-beta.
          * La propuesta es solo sugerencia, los parámetros de la declaración podrían variar.
