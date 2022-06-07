@@ -1214,8 +1214,6 @@ double AIPlayer::miHeuristica(const Parchis &estado, int jugador) {
 
 }
 
-
-
 double AIPlayer::ValoracionTest(const Parchis &estado, int jugador)
 {
     // Heurística de prueba proporcionada para validar el funcionamiento del algoritmo de búsqueda.
