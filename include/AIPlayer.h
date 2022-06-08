@@ -78,6 +78,8 @@ class AIPlayer: public Player{
         static double miHeuristica(const Parchis &estado, int jugador);
         static double miHeuristica2(const Parchis &estado, int jugador);
         static double heuristica_migue(const Parchis &estado, int jugador);
+        static double otraHeuristica(const Parchis &estado, int jugador);
+
         /**
          * @brief Propuesta de declaración de la función poda alfa-beta.
          * La propuesta es solo sugerencia, los parámetros de la declaración podrían variar.
