@@ -77,15 +77,15 @@ class AIPlayer: public Player{
 
         static double miHeuristica(const Parchis &estado, int jugador);
         static double miHeuristica2(const Parchis &estado, int jugador);
-        static double heuristica_migue(const Parchis &estado, int jugador);
-        static double otraHeuristica(const Parchis &estado, int jugador);
+        static double miHeuristica3(const Parchis &estado, int jugador);
+        static double miHeuristica4(const Parchis &estado, int jugador);
+        static double miHeuristica5(const Parchis &estado, int jugador);
 
         /**
          * @brief Propuesta de declaración de la función poda alfa-beta.
          * La propuesta es solo sugerencia, los parámetros de la declaración podrían variar.
          */
         double Poda_AlfaBeta(const Parchis &actual, int jugador, int profundidad, int profundidad_max, color &c_piece, int &id_piece, int &dice, double alpha, double beta, double (*heuristic)(const Parchis &, int)) const;
-        double poda_migue(const Parchis &actual, int jugador, int profundidad, int profundidad_max, color &c_piece, int &id_piece, int &dice, double alpha, double beta, double (*heuristic)(const Parchis &, int)) const;
 
 };
 #endif
